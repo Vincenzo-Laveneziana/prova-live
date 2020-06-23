@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -37,7 +37,31 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        // Validation
+        $request->validate([
+            'name' => 'required|max:20',
+            'price' => 'required',
+            'description' => 'required',
+        ]); 
+        
+        // Build data
+        $newProduct = new Product();
+        $newProduct->fill($data);
+        
+        // Save
+        $saved = $newProduct->save();
+
+        if ( $saved )
+        {   
+            // Return to empty create
+            // return back()->with('product_saved', $newProduct->name);
+
+            // Redirect to show
+            return redirect()->route('product.show', $newProduct->id)->with('product_saved', $newProduct->name);
+        }
+
     }
 
     /**
