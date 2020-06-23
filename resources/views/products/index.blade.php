@@ -20,6 +20,9 @@
             <li class="item">
               description: {{ $product->description }}
             </li>
+            <li>
+              <a href="{{ route('product.show', $product->id) }}">Dettaglio</a>
+            </li>
           </ul>
 
         </li>
